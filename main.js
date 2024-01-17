@@ -3,8 +3,11 @@ const gridHtml = document.querySelector("#grid");
 const playBtn = document.querySelector(".play-btn");
 const rstBtn = document.querySelector(".rst-btn");
 const selectHtml = document.querySelector("#diff-level");
+
 const bombList = [];
 const totBombs = 16;
+
+let count = 0;
 function genRandomNumber(max) {
   return Math.floor(Math.random() * max) + 1;
 }
@@ -30,16 +33,21 @@ function startGame(n) {
 
     cellHtml.addEventListener("click", function () {
       let cellNum = this.querySelector("span").innerText;
-
+      let state;
       bombList.forEach((bomb) => {
         if (bomb == cellNum) {
           this.classList.add("bomb");
-          endGame();
+          state = true;
         } else {
           this.classList.add("active");
         }
       });
-
+      if (state) {
+        endGame();
+      } else {
+        count = count + 1;
+        console.log(count);
+      }
       console.log(cellNum);
     });
 
@@ -54,14 +62,15 @@ playBtn.addEventListener("click", () => {
   rstBtn.classList.remove("noshow");
   createBombList(diffLevel);
   console.log(bombList);
-
   startGame(diffLevel);
 });
-
+function endGame() {
+  const endGameInfos = document.createElement("div");
+  endGameInfos.classList.add("end-game");
+  endGameInfos.innerHTML += `<h2>GAME OVER</h2>`;
+  endGameInfos.innerHTML += `<h2>Your Score : ${count}</h2>`;
+  mainHtml.appendChild(endGameInfos);
+}
 rstBtn.addEventListener("click", () => {
   location.reload();
 });
-
-function endGame() {
-  console.log("you lost");
-}
