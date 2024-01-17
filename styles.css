@@ -63,3 +63,8 @@ main {
 .noshow {
   display: none;
 }
+
+.bomb {
+  background-color: red;
+  content: "💥💥";
+}

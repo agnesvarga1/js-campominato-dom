@@ -11,17 +11,16 @@ function genRandomNumber(max) {
 
 function createBombList(x) {
   do {
-    let randomBombPlace;
+    let randomBombPlace = genRandomNumber(x ** 2);
     if (!bombList.includes(randomBombPlace)) {
-      randomBombPlace = genRandomNumber(x ** 2);
       bombList.push(randomBombPlace);
     }
   } while (bombList.length < totBombs);
-  console.log(bombList);
 }
 
 function startGame(n) {
   let cellPerLine = n;
+
   for (let i = 1; i <= cellPerLine ** 2; i++) {
     let cellHtml = document.createElement("div");
     const wCalced = `calc(100% / ${cellPerLine})`;
@@ -30,10 +29,20 @@ function startGame(n) {
     cellHtml.innerHTML = `<span>${i}</span>`;
 
     cellHtml.addEventListener("click", function () {
-      this.classList.toggle("active");
       let cellNum = this.querySelector("span").innerText;
+
+      bombList.forEach((bomb) => {
+        if (bomb == cellNum) {
+          this.classList.add("bomb");
+          endGame();
+        } else {
+          this.classList.add("active");
+        }
+      });
+
       console.log(cellNum);
     });
+
     gridHtml.append(cellHtml);
   }
 }
@@ -44,9 +53,15 @@ playBtn.addEventListener("click", () => {
   playBtn.classList.add("noshow");
   rstBtn.classList.remove("noshow");
   createBombList(diffLevel);
+  console.log(bombList);
+
   startGame(diffLevel);
 });
 
 rstBtn.addEventListener("click", () => {
   location.reload();
 });
+
+function endGame() {
+  console.log("you lost");
+}
