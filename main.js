@@ -33,19 +33,16 @@ function startGame(n) {
 
     cellHtml.addEventListener("click", function () {
       let cellNum = this.querySelector("span").innerText;
-      let state;
-      bombList.forEach((bomb) => {
-        if (bomb == cellNum) {
-          this.classList.add("bomb");
-          state = true;
-        } else {
-          this.classList.add("active");
-        }
-      });
-      if (state) {
+
+      let state = bombList.includes(Number(cellNum));
+
+      if (state === true) {
+        this.classList.add("bomb");
         endGame();
       } else {
+        this.classList.add("active");
         count = count + 1;
+
         if (count == cellPerLine ** 2 - totBombs) {
           winner();
         }
