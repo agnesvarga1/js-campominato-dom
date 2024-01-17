@@ -3,6 +3,22 @@ const gridHtml = document.querySelector("#grid");
 const playBtn = document.querySelector(".play-btn");
 const rstBtn = document.querySelector(".rst-btn");
 const selectHtml = document.querySelector("#diff-level");
+const bombList = [];
+const totBombs = 16;
+function genRandomNumber(max) {
+  return Math.floor(Math.random() * max) + 1;
+}
+
+function createBombList(x) {
+  do {
+    let randomBombPlace;
+    if (!bombList.includes(randomBombPlace)) {
+      randomBombPlace = genRandomNumber(x ** 2);
+      bombList.push(randomBombPlace);
+    }
+  } while (bombList.length < totBombs);
+  console.log(bombList);
+}
 
 function startGame(n) {
   let cellPerLine = n;
@@ -27,6 +43,7 @@ playBtn.addEventListener("click", () => {
   mainHtml.classList.remove("noshow");
   playBtn.classList.add("noshow");
   rstBtn.classList.remove("noshow");
+  createBombList(diffLevel);
   startGame(diffLevel);
 });
 
