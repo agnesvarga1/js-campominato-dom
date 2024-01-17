@@ -46,9 +46,10 @@ function startGame(n) {
         endGame();
       } else {
         count = count + 1;
-        console.log(count);
+        if (count == cellPerLine ** 2 - totBombs) {
+          winner();
+        }
       }
-      console.log(cellNum);
     });
 
     gridHtml.append(cellHtml);
@@ -68,6 +69,13 @@ function endGame() {
   const endGameInfos = document.createElement("div");
   endGameInfos.classList.add("end-game");
   endGameInfos.innerHTML += `<h2>GAME OVER</h2>`;
+  endGameInfos.innerHTML += `<h2>Your Score : ${count}</h2>`;
+  mainHtml.appendChild(endGameInfos);
+}
+function winner() {
+  const endGameInfos = document.createElement("div");
+  endGameInfos.classList.add("end-game");
+  endGameInfos.innerHTML += `<h2>YOU WON</h2>`;
   endGameInfos.innerHTML += `<h2>Your Score : ${count}</h2>`;
   mainHtml.appendChild(endGameInfos);
 }
